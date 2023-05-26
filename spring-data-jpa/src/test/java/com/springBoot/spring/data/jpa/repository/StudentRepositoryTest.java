@@ -1,23 +1,33 @@
 package com.springBoot.spring.data.jpa.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 
 import com.springBoot.spring.data.jpa.entity.Guardian;
 import com.springBoot.spring.data.jpa.entity.Student;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
+@Transactional
 class StudentRepositoryTest {
 
-  @Autowired
+ @Autowired
   private StudentRepository studentRepository;
 
 
+  @BeforeEach
+  public void setup() {
+  }
   @DisplayName("Save Student")
   @Test
   public void saveStudent(){
@@ -27,6 +37,12 @@ class StudentRepositoryTest {
         lastName ("Khan").
         build();
     studentRepository.save(student);
+    Student savedStudent = studentRepository.save(student);
+
+    assertNotNull(savedStudent.getStudentId());
+    assertEquals(student.getEmailId(), savedStudent.getEmailId());
+    assertEquals(student.getFirstName(), savedStudent.getFirstName());
+    assertEquals(student.getLastName(), savedStudent.getLastName());
   }
 
   @DisplayName("Save Student with Guardian")
