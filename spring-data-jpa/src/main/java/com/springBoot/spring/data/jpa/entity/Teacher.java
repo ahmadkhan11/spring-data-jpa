@@ -1,0 +1,43 @@
+package com.springBoot.spring.data.jpa.entity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Teacher {
+
+  @Id
+  @SequenceGenerator(
+      name = "teacher_sequence",
+      sequenceName = "teacher_sequence",
+      allocationSize = 1
+  )
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "teacher_sequence"
+  )
+  private Long teacherId;
+  private String firstName;
+  private String LastName;
+
+
+  @OneToMany(
+      cascade = CascadeType.ALL
+  )
+  private List<Course> courseList;
+}
