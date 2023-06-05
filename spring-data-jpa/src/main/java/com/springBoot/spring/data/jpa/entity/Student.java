@@ -11,10 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 @Entity
 @Data
@@ -51,4 +53,7 @@ public class Student {
   @Embedded
   private Guardian guardian;
 
+  public Map<String, AttributeValue> toAttributeValueMap() {
+    return null;
+  }
 }
