@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
@@ -42,6 +44,16 @@ public class Course {
       referencedColumnName = "courseId"
   )
   private CourseMaterial courseMaterial;
+
+  @ManyToOne(
+      cascade = CascadeType.ALL
+  )
+  @JoinColumn(
+      name = "teacher_id",
+      referencedColumnName = "teacherId"
+
+  )
+  private Teacher teacher;
 
 
 }
