@@ -38,7 +38,7 @@ public class TeacherRepositoryTes {
     Teacher teacher = Teacher.builder()
         .firstName("Ali")
         .LastName("Khan")
-        .courseList(courseList)
+        //.courseList(courseList)
         .build();
     Teacher teacher1 = teacherRepository.save(teacher);
     System.out.println("teacher1 = " + teacher1);
