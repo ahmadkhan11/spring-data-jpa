@@ -3,7 +3,11 @@ package com.springBoot.spring.data.jpa.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.springBoot.spring.data.jpa.entity.Course;
+import com.springBoot.spring.data.jpa.entity.Guardian;
+import com.springBoot.spring.data.jpa.entity.Student;
 import com.springBoot.spring.data.jpa.entity.Teacher;
+import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +113,41 @@ class CourseRepositoryTest {
         courseRepository.findByTitleContaining("P",firstPageTenRecords).getContent();
 
     System.out.println("courses = " + courses);
+
+  }
+
+  @Test
+  public void saveCourseWithTeacherAndStudent(){
+
+    Teacher teacher = Teacher.builder()
+        .firstName("Ali")
+        .LastName("Khan")
+        .build();
+    Guardian guardian =  Guardian.builder()
+        .name("Ali")
+        .email("AlikhanJadoon@gmail.com")
+        .mobile("090078601").build();
+    Student student = Student. builder().
+        emailId("ahmadKhanjadoon@gmail.com ").
+        firstName ("Muhammad Ahamd").
+        lastName ("Khan").
+        guardian(guardian).build();
+    List<Student> studentList = new ArrayList<>();
+    studentList.add(student);
+
+    Course course = Course.builder()
+        .credit(6)
+        .title("Software")
+        .teacher(teacher)
+        .students(studentList)
+       // .students((studentList
+        .build();
+
+    Course courseRepo =courseRepository.save(course);
+
+    System.out.println("courseRepo = " + courseRepo);
+
+
 
   }
 }
