@@ -3,6 +3,7 @@ package com.springBoot.spring.data.jpa.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.springBoot.spring.data.jpa.entity.Course;
+import com.springBoot.spring.data.jpa.entity.CourseMaterial;
 import com.springBoot.spring.data.jpa.entity.Guardian;
 import com.springBoot.spring.data.jpa.entity.Student;
 import com.springBoot.spring.data.jpa.entity.Teacher;
@@ -18,29 +19,34 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @SpringBootTest
+@Transactional
 class CourseRepositoryTest {
 
   @Autowired
   CourseRepository courseRepository;
 
   @Test
-  public void findAll(){
+   void findAll(){
    List<Course> response= courseRepository.findAll();
     System.out.println("response = " + response);
 
   }
 
   @Test
-  public void saveCourseWithTeacher(){
+   void saveCourseWithTeacher(){
     Teacher teacher = Teacher.builder()
         .firstName("Muhammad")
         .LastName("Ali Khan")
+        .build();
+    CourseMaterial courseMaterial = CourseMaterial.builder()
+        .url("url.com")
         .build();
 
     Course course = Course.builder()
         .credit(5)
         .title("Python")
         .teacher(teacher)
+        .courseMaterial(courseMaterial)
         .build();
 
     Course response =courseRepository.save(course);
@@ -48,7 +54,7 @@ class CourseRepositoryTest {
   }
 
   @Test
-  public void findAllPagination(){
+   void findAllPagination(){
     Pageable firstPagewithThreeRecords =
         PageRequest.of(0, 3);
     Pageable secondPageWithTwoRecords =
@@ -70,7 +76,7 @@ class CourseRepositoryTest {
   }
 
   @Test
-  public void findAllWithSorting(){
+   void findAllWithSorting(){
 
     Pageable sortByTitle =
         PageRequest.of(0,2,Sort.by("title"));
@@ -104,7 +110,7 @@ class CourseRepositoryTest {
   }
 
   @Test
-  public void findByTitleContaining(){
+   void findByTitleContaining(){
 
     PageRequest firstPageTenRecords =
         PageRequest.of(0,10);
@@ -117,7 +123,7 @@ class CourseRepositoryTest {
   }
 
   @Test
-  public void saveCourseWithTeacherAndStudent(){
+  void saveCourseWithTeacherAndStudent(){
 
     Teacher teacher = Teacher.builder()
         .firstName("Ali")

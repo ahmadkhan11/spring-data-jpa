@@ -1,7 +1,11 @@
 package com.springBoot.spring.data.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,6 +42,8 @@ public class Course {
   private Long courseId;
   private String title;
   private Integer credit;
+
+
   @OneToOne(
       mappedBy = "course",
       cascade = CascadeType.ALL
@@ -47,6 +53,7 @@ public class Course {
       referencedColumnName = "courseId"
   )
   private CourseMaterial courseMaterial;
+
 
   @ManyToOne(
       cascade = CascadeType.ALL
@@ -58,8 +65,10 @@ public class Course {
   )
   private Teacher teacher;
 
+
   @ManyToMany(
-      cascade = CascadeType.ALL
+      cascade = CascadeType.ALL,
+      fetch = FetchType.EAGER
   )
   @JoinTable(
       name = "student_course_map",
